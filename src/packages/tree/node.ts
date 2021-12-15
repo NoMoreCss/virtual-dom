@@ -23,11 +23,13 @@ export class Node {
   private children: Node[];
   private classList: string[];
   private id: string | null;
+  private tagName: string | null;
 
-  constructor() {
+  constructor(tagName: string | null = null) {
     this.children = [];
     this.classList = [];
     this.id = null;
+    this.tagName = tagName;
   }
 
   public getChildren() {
@@ -112,6 +114,30 @@ export class Node {
     }
 
     return this.getElementsById(actualSelector.value);
+  }
+
+  public getTagName() {
+    if (!this.tagName) {
+      throw new Error('Abstract element cannot have a tag name');
+    }
+
+    return this.tagName;
+  }
+
+  public getHTMLFormattedOpeningTagName() {
+    if (!this.tagName) {
+      throw new Error('Abstract element cannot have a tag name');
+    }
+
+    return `<${this.getTagName()}>`;
+  }
+
+  public getHTMLFormattedClosingTagName() {
+    if (!this.tagName) {
+      throw new Error('Abstract element cannot have a tag name');
+    }
+
+    return `</${this.getTagName()}>`;
   }
 
   private static parseSelector(selector: string) {

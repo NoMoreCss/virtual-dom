@@ -55,6 +55,28 @@ describe(Node, () => {
     });
   });
 
+  describe('tagName', () => {
+    it('should return the tagName', () => {
+      const node = new Node('div');
+      expect(node.getTagName()).toEqual('div');
+    });
+
+    it('should throw an error if the node doesnt have a tagName', () => {
+      const node = new Node();
+      expect(node.getTagName).toThrow();
+    });
+
+    it('should get the opening tag of a node', () => {
+      const node = new Node('div');
+      expect(node.getHTMLFormattedOpeningTagName()).toEqual('<div>');
+    });
+
+    it('should return the closing tag of a node', () => {
+      const node = new Node('div');
+      expect(node.getHTMLFormattedClosingTagName()).toEqual('</div>');
+    });
+  });
+
   describe('#getElementsByClass', () => {
     it('should be able to search by classes', () => {
       const node = getNewNode();

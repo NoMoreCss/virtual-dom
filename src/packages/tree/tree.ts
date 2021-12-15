@@ -1,6 +1,5 @@
-import { Node } from "./node";
-
-export class RootNode extends Node {}
+import { HTMLConverter } from "../html_converter/html_converter";
+import { RootNode } from "./node_types";
 
 export class Tree {
   private root: RootNode;
@@ -11,5 +10,9 @@ export class Tree {
 
   public getRoot() {
     return this.root;
+  }
+
+  public toHTML() {
+    return new HTMLConverter(this.root).parse();
   }
 }
