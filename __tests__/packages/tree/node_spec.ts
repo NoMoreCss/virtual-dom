@@ -271,4 +271,8 @@ describe(Node, () => {
       expect(node.querySelectorAll('.test')).toEqual([]);
     });
   });
+
+  it('should fail', () => {
+    expect(false).toEqual(true);
+  });
 });
