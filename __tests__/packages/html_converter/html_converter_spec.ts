@@ -98,5 +98,19 @@ describe(HTMLConverter, () => {
 
       expect(converter.parse()).toEqual('<html><div class="test other-test" id="test"></div></html>');
     });
+
+    it('should be able to produce the correct formatted output if it is a self closing tag', () => {
+      const node = new RootNode();
+      const img = new ImgNode();
+
+      img.setId('test');
+      img.getClassList().push('test');
+      img.getClassList().push('other-test');
+      node.appendChild(img);
+
+      const converter = new HTMLConverter(node);
+
+      expect(converter.parse()).toEqual('<html><img class="test other-test" id="test" /></html>');
+    });
   });
 });
