@@ -1,22 +1,16 @@
 import { Node } from "../tree/node";
 
 export class HTMLConverter {
-  constructor(private readonly rootNode: Node | null) {}
+  constructor(private readonly node: Node | null) {}
 
   public parse() : string {
-    if (!this.rootNode) {
-      return '';
-    }
+    if (!this.node) return '';
 
-    let result = this.rootNode.getHTMLFormattedOpeningTagName();
-
-    this.rootNode.getChildren().forEach(child => {
+    const result = this.node.getChildren().reduce((acc, child) => {
       const parser = new HTMLConverter(child);
-      result += parser.parse();
-    });
+      return acc + parser.parse();
+    }, this.node.getHTMLFormattedOpeningTagName());
 
-    result += this.rootNode.getHTMLFormattedClosingTagName();
-
-    return result;
+    return `${result}${this.node.getHTMLFormattedClosingTagName()}`;
   }
 }

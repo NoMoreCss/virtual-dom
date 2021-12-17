@@ -131,11 +131,34 @@ export class Node {
       throw new Error('Abstract element cannot have a tag name');
     }
 
+    let opening = `<${this.getTagName()}`;
+    let closing = '>';
+
     if (this.isSelfClosing) {
-      return `<${this.getTagName()} />`;
+      closing = ' />';
     }
 
-    return `<${this.getTagName()}>`;
+    if (this.hasClasses()) {
+      opening = `${opening} class="${this.formatClasses()}"`;
+    }
+
+    if (this.hasId()) {
+      opening = `${opening} id="${this.id}"`;
+    }
+
+    return `${opening}${closing}`;
+  }
+
+  private hasId() {
+    return this.id !== null;
+  }
+
+  private hasClasses() {
+    return this.classList.length > 0;
+  }
+
+  private formatClasses() {
+    return this.classList.join(' ');
   }
 
   public getHTMLFormattedClosingTagName() {
