@@ -25,6 +25,7 @@ export class Node {
   private id: string | null;
   private tagName: string | null;
   private isSelfClosing: boolean;
+  private attributes: { [key: string]: string };
 
   constructor(tagName: string | null = null, isSelfClosing = false) {
     this.children = [];
@@ -32,6 +33,7 @@ export class Node {
     this.id = null;
     this.tagName = tagName;
     this.isSelfClosing = isSelfClosing;
+    this.attributes = {};
   }
 
   public getChildren() {
@@ -146,7 +148,15 @@ export class Node {
       opening = `${opening} id="${this.id}"`;
     }
 
+    if (this.hasAttributes()) {
+      opening = `${opening}${this.getFormattedHTMLAttributes()}`;
+    }
+
     return `${opening}${closing}`;
+  }
+
+  private hasAttributes() {
+    return Object.keys(this.attributes).length > 0;
   }
 
   private hasId() {
@@ -161,6 +171,12 @@ export class Node {
     return this.classList.join(' ');
   }
 
+  private getFormattedHTMLAttributes() {
+    return Object.keys(this.attributes).reduce((acc, attribute) =>
+      acc + ` ${attribute}="${this.attributes[attribute]}"`
+    , '');
+  }
+
   public getHTMLFormattedClosingTagName() {
     if (!this.tagName) {
       throw new Error('Abstract element cannot have a tag name');
@@ -171,6 +187,18 @@ export class Node {
     }
 
     return `</${this.getTagName()}>`;
+  }
+
+  public setAttribute(name: string, value: string) {
+    this.attributes[name] = value;
+  }
+
+  public getAttribute(name: string) {
+    if (!this.attributes[name]) {
+      throw new Error(`Attribute ${name} does not exist`);
+    }
+
+    return this.attributes[name];
   }
 
   private static parseSelector(selector: string) : Selector {

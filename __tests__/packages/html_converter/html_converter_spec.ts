@@ -112,5 +112,30 @@ describe(HTMLConverter, () => {
 
       expect(converter.parse()).toEqual('<html><img class="test other-test" id="test" /></html>');
     });
+
+    it('should properly display the attributes of a node', () => {
+      const node = new RootNode();
+      const div = new DivNode();
+
+      div.setAttribute('data-test', 'test');
+      node.appendChild(div);
+
+      const converter = new HTMLConverter(node);
+
+      expect(converter.parse()).toEqual('<html><div data-test="test"></div></html>');
+    });
+
+    it('should properly display the attributes of a node if it has more than one', () => {
+      const node = new RootNode();
+      const div = new DivNode();
+
+      div.setAttribute('data-test', 'test');
+      div.setAttribute('data-test2', 'test2');
+      node.appendChild(div);
+
+      const converter = new HTMLConverter(node);
+
+      expect(converter.parse()).toEqual('<html><div data-test="test" data-test2="test2"></div></html>');
+    });
   });
 });

@@ -77,6 +77,20 @@ describe(Node, () => {
     });
   });
 
+  describe('attributes', () => {
+    it('should be able to set a new attribute', () => {
+      const node = getNewNode();
+      node.setAttribute('test', 'testValue');
+
+      expect(node.getAttribute('test')).toEqual('testValue');
+    });
+
+    it('should throw an error if getting an invalid attribute', () => {
+      const node = getNewNode();
+      expect(() => node.getAttribute('test')).toThrow();
+    });
+  });
+
   describe('#getElementsByClass', () => {
     it('should be able to search by classes', () => {
       const node = getNewNode();
