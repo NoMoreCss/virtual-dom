@@ -5,11 +5,11 @@ export class SelfClosingNode extends Node {
     super(tagName, true);
   }
 
-  public appendChild(child: Node): void {
+  public appendChild(_: Node): void {
     throw new Error('Cannot append child to self closing node');
   }
 
-  public appendChildren(children: Node[]): void {
+  public appendChildren(_: Node[]): void {
     throw new Error('Cannot append children to self closing node');
   }
 }
