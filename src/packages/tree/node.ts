@@ -24,12 +24,14 @@ export class Node {
   private classList: string[];
   private id: string | null;
   private tagName: string | null;
+  private isSelfClosing: boolean;
 
-  constructor(tagName: string | null = null) {
+  constructor(tagName: string | null = null, isSelfClosing = false) {
     this.children = [];
     this.classList = [];
     this.id = null;
     this.tagName = tagName;
+    this.isSelfClosing = isSelfClosing;
   }
 
   public getChildren() {
@@ -129,6 +131,10 @@ export class Node {
       throw new Error('Abstract element cannot have a tag name');
     }
 
+    if (this.isSelfClosing) {
+      return `<${this.getTagName()} />`;
+    }
+
     return `<${this.getTagName()}>`;
   }
 
@@ -137,10 +143,14 @@ export class Node {
       throw new Error('Abstract element cannot have a tag name');
     }
 
+    if (this.isSelfClosing) {
+      return '';
+    }
+
     return `</${this.getTagName()}>`;
   }
 
-  private static parseSelector(selector: string) {
+  private static parseSelector(selector: string) : Selector {
     const selectorType = selector[0];
     const selectorValue = selector.slice(1);
 

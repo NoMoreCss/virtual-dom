@@ -1,5 +1,5 @@
 import { HTMLConverter } from "../../../src/packages/html_converter/html_converter";
-import { RootNode, DivNode } from "../../../src/packages/tree/node_types";
+import { RootNode, DivNode, ImgNode } from "../../../src/packages/tree/node_types";
 
 describe(HTMLConverter, () => {
   describe('#parse', () => {
@@ -24,6 +24,14 @@ describe(HTMLConverter, () => {
 
       node.appendChild(new DivNode());
       expect(converter.parse()).toEqual('<html><div></div><div></div></html>');
+    });
+
+    it('should parse correctly even if it has a self closing node', () => {
+      const node = new RootNode();
+      node.appendChild(new ImgNode());
+
+      const converter = new HTMLConverter(node);
+      expect(converter.parse()).toEqual('<html><img /></html>');
     });
   });
 });

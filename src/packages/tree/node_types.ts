@@ -1,4 +1,5 @@
 import { Node } from "./node";
+import { SelfClosingNode } from "./self_closing_node";
 
 export class RootNode    extends Node { constructor() { super('html')    }}
 export class DivNode     extends Node { constructor() { super('div')     }}
@@ -15,10 +16,5 @@ export class StyleNode   extends Node { constructor() { super('style')   }}
 export class HeadNode    extends Node { constructor() { super('head')    }}
 export class FormNode    extends Node { constructor() { super('form')    }}
 
-
-// TODO: Implement self closing tags
-// Inherit from a class that inherits from node, called SelfClosingNode, that throws an
-// error if you try to add children to it, and doesnt have a closing tag.
-
-// export class ImgNode     extends Node { constructor() { super('img')  }}
-// export class InputNode   extends Node { constructor() { super('input')}}
+export class ImgNode     extends SelfClosingNode { constructor() { super('img')  }}
+export class InputNode   extends SelfClosingNode { constructor() { super('input')}}
