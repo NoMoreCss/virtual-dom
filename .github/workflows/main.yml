@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: action/setup-node@v2-beta
+      - uses: action/setup-node@setup-node@v2.1.2
         with:
           node-version: 14
       - run: npm ci
       - run: npm run test
-      
+
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
