@@ -16,6 +16,16 @@ export class OpeningTagToken extends Token {
   constructor(value: string) {
     super(Type.OPEN_TAG, value);
   }
+
+  public getClasses(): string[] {
+    const classes = this.value.match(/class="(.*?)"/);
+
+    if (classes) {
+      return classes[1].split(' ');
+    }
+
+    return [];
+  }
 }
 
 export class ClosingTagToken extends Token {
