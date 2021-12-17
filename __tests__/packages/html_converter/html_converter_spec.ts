@@ -1,5 +1,6 @@
 import { HTMLConverter } from "../../../src/packages/html_converter/html_converter";
 import { RootNode, DivNode, ImgNode } from "../../../src/packages/tree/node_types";
+import { TextualNode } from "../../../src/packages/tree/textual_node";
 
 describe(HTMLConverter, () => {
   describe('#parse', () => {
@@ -136,6 +137,17 @@ describe(HTMLConverter, () => {
       const converter = new HTMLConverter(node);
 
       expect(converter.parse()).toEqual('<html><div data-test="test" data-test2="test2"></div></html>');
+    });
+
+    it('should properly display a textual element', () => {
+      const node = new RootNode();
+      const textContent = 'this is a textual element';
+      const textualNode = new TextualNode(textContent);
+
+      node.appendChild(textualNode);
+      const converter = new HTMLConverter(node);
+
+      expect(converter.parse()).toEqual(`<html>${textContent}</html>`);
     });
   });
 });
