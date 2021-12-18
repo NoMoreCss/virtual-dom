@@ -55,5 +55,17 @@ describe(Lexer, () => {
         new EOFToken(),
       ]);
     });
+
+    it('should be able to lex even the self closing elements', () => {
+      const lexer = new Lexer('<img class="bla bla" />');
+
+      const tokens = lexer.lex();
+      expect(tokens.length).toEqual(2);
+
+      expect(tokens).toEqual([
+        new OpeningTagToken('img class="bla bla"'),
+        new EOFToken(),
+      ]);
+    });
   });
 });
