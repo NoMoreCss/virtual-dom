@@ -13,8 +13,15 @@ export class Token {
 }
 
 export class OpeningTagToken extends Token {
-  constructor(value: string) {
+  private isSelfClosing: boolean;
+
+  constructor(
+    value: string,
+    options: { isSelfClosing: boolean } = { isSelfClosing: false }
+  ) {
+
     super(Type.OPEN_TAG, value);
+    this.isSelfClosing = options.isSelfClosing;
   }
 
   public getClasses(): string[] {
@@ -25,6 +32,10 @@ export class OpeningTagToken extends Token {
     }
 
     return [];
+  }
+
+  public isSelfClosingTag(): boolean {
+    return this.isSelfClosing;
   }
 }
 

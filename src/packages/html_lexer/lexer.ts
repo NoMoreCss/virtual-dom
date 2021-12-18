@@ -74,8 +74,11 @@ export class Lexer {
       }
 
       if (char === '/') {
-        // We found an />, so we are done
-        return new OpeningTagToken(tagContent.substring(0, tagContent.length - 2));
+        // We found an />, so it means that the tag is self-closing
+        return new OpeningTagToken(
+          tagContent.substring(0, tagContent.length - 2),
+          { isSelfClosing: true }
+        );
       }
     }
   }

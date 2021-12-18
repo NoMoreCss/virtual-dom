@@ -63,7 +63,7 @@ describe(Lexer, () => {
       expect(tokens.length).toEqual(2);
 
       expect(tokens).toEqual([
-        new OpeningTagToken('img class="bla bla"'),
+        new OpeningTagToken('img class="bla bla"', { isSelfClosing: true }),
         new EOFToken(),
       ]);
     });
